@@ -1,4 +1,4 @@
-﻿using BancoApi.Views;
+using BancoApi.Views;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
@@ -19,9 +19,9 @@ menuPrincipal.Add("0 - Voltar           ");
 tela.configurarTela();
 while(true)
 {
-    tela.montarTelaSistema("Banco PWZ BRASIL");
-    opcao = tela.mostrarMenu(menuPrincipal, 3,3);
-
+    tela.montarTelaSistema("Banco PWZ BRASIL"); //Contas Registradas {Conta.contasCriadas} até o momento
+    opcao = tela.mostrarMenu(menuPrincipal, 3, 3);
+ 
     if (opcao == "0") break;
 
     if (opcao == "1")
@@ -76,7 +76,6 @@ while(true)
             Console.Write("Conta não encontrada. ");
             Console.ReadKey(true);
         }
-
     }
 
     if (opcao == "2")
@@ -111,66 +110,63 @@ while(true)
             Console.Write(bancoDados[x].recuperarExtrato());
             Console.Write("Pressione uma tecla para continuar. ");
             Console.ReadKey(true);
-
-
         }
         else
         {
             Console.SetCursorPosition(1, 4);
             Console.Write("Conta não localizada.");
-
+            Console.ReadKey(true);
         }
-
-
     }
 
 
         if (opcao == "3")
         {
-        tela.montarMoldura(10, 8, 40, 12, "Consultar contas");
+            Console.Clear();
+            tela.montarMoldura(10, 8, 45, 15, "CONSULTAR CONTA");
 
-        //perguntar qual o numero da conta está buscando
-        Console.SetCursorPosition(11, 10);
-        Console.Write("Conta :  ");
-        string con = Console.ReadLine();
+            //perguntar qual o numero da conta está buscando
+            Console.SetCursorPosition(11, 10);
+            Console.Write("Conta :  ");
+            string con = Console.ReadLine();
 
-        //buscador de contas
-        string resultado = "Nenhuma conta registrada";
-        foreach (Conta_view cta in bancoDados)
-        {
-            if (cta.NumeroConta == con)
+            //buscador de contas
+            string resultado = "Nenhuma conta registrada";
+            foreach (Conta_view cta in bancoDados)
             {
-                object ConsultarConta = null;
-                resultado = cta.ConsultarConta();
-                break;
+                if (cta.NumeroConta == con)
+                {
+                    object ConsultarConta = null;
+                    resultado = cta.ConsultarConta();
+                    break;
+                }
             }
-        }
 
-            Console.SetCursorPosition(11, 12);
-            Console.Write(resultado);
-            Console.ReadKey();
+                Console.SetCursorPosition(11, 12);
+                Console.Write(resultado);
+                Console.ReadKey();
         }
 
 
     if (opcao == "5")
     {
         Console.Clear();
-        tela.montarMoldura(7, 7, 40, 12, "NOVA CONTA");
+        tela.montarMoldura(7, 7, 40, 15, "NOVA CONTA");
+        
 
         //Vai perguntar o numero da conta
-        Console.SetCursorPosition(9, 9);
-        Console.WriteLine("Conta :    ");
-        Console.SetCursorPosition(17, 9);
-        string con = Console.ReadLine();
+        Console.SetCursorPosition(10, 9);
+        string con = Conta_view.proximaConta.ToString();
+        Console.Write($"Conta :  {con}");
 
         //Vai perguntar o titular da conta
-        Console.SetCursorPosition(9, 10);
+        Console.SetCursorPosition(10, 10);
         Console.WriteLine("Titular :  ");
         Console.SetCursorPosition(19, 10);
         string tit = Console.ReadLine();
 
         //Vai confirmar os dados informados
-        Console.SetCursorPosition(9, 11);
+        Console.SetCursorPosition(10, 11);
         Console.WriteLine("Confirme seus dados (S/N):  ");
         Console.SetCursorPosition(36, 11);
         string res = Console.ReadLine();
@@ -184,6 +180,4 @@ while(true)
 
         }
     }
-
-
 }
