@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -38,7 +38,7 @@ namespace BancoApi.Views
         {
             montarMoldura(0, 0, 79, 24);
             montarLinhaHor(2, 0, 79);
-            centralizar(1, 0, 79, "Banco de Crédito");
+            centralizar(1, 0, 79, nome);
         }
 
 
