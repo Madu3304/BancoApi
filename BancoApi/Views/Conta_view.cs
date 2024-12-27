@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +8,11 @@ namespace BancoApi.Views
 {
     internal class Conta_view
     {
+
+        //propriedade estática, para gerar sozinho os codigos da conta. Essa classe é acessivel atraves da classe e não do objeto. 
+        static public int proximaConta = 321;
+        static public int contasCriadas = 0;
+
 
         //propriedades
         public string NumeroConta { get; set; }
@@ -23,6 +28,8 @@ namespace BancoApi.Views
             this.NumeroConta = NumeroConta;
             this.Titular = titular;
             this.Saldo = 0;
+            proximaConta ++;
+            contasCriadas ++;
         }
 
 
@@ -65,11 +72,18 @@ namespace BancoApi.Views
             decimal saldo = 0;
 
             //gerar arquivo de texto. 
-            extrato.AppendLine("Data\tValor\tSaldo\tDescrição");
+            extrato.AppendLine("Data\tValor\tTipo\tSaldo\tDescrição");
             extrato.AppendLine("-----------------------------");
 
+            foreach(Transacao_view t in Transacoes)
+            {
+                if( t.Tipo == "C") { saldo += t.Valor; }
+                else { saldo -= t.Valor; }
 
-            return string.Empty;
+                extrato.AppendLine($"{t.Data.ToShortDateString()} \t {t.Valor} \t {t.Tipo} \t {t.saldo} \t {t.Descricao}");
+            }
+
+            return extrato.ToString();
         }
     }
 }
